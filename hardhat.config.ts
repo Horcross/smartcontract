@@ -19,10 +19,10 @@ const chainIds = {
   goerli: 5,
   sepolia: 11155111,
   hardhat: 31337,
+  quorum: 81712,
   mainnet: 1,
   avalanche: 43114,
   bsc: 56,
-  tevmos: 9000,
   'arbitrum-mainnet': 42161,
   'polygon-mainnet': 137,
   'optimism-goerli': 420,
@@ -50,8 +50,8 @@ function getChainConfig (chain: keyof typeof chainIds): NetworkUserConfig {
     case 'optimism-goerli':
       jsonRpcUrl = 'https://goerli.optimism.io'
       break
-    case 'tevmos':
-      jsonRpcUrl = 'https://eth.bd.evmos.dev:8545'
+    case 'quorum':
+      jsonRpcUrl = process.env.QUORUM_URL || ''
       break
     default:
       jsonRpcUrl = `https://${chain}.infura.io/v3/${infuraApiKey}`
@@ -72,6 +72,7 @@ const config: HardhatUserConfig = {
     local: {
       url: 'http://127.0.0.1:8545',
     },
+    quorum: getChainConfig('quorum'),
     arbitrum: getChainConfig('arbitrum-mainnet'),
     avalanche: getChainConfig('avalanche'),
     bsc: getChainConfig('bsc'),
@@ -79,7 +80,6 @@ const config: HardhatUserConfig = {
     sepolia: getChainConfig('sepolia'),
     mainnet: getChainConfig('mainnet'),
     optimism: getChainConfig('optimism-mainnet'),
-    tevmos: getChainConfig('tevmos'),
     'optimism-goerli': getChainConfig('optimism-goerli'),
     'polygon-mainnet': getChainConfig('polygon-mainnet'),
     'polygon-mumbai': getChainConfig('polygon-mumbai'),
@@ -91,14 +91,7 @@ const config: HardhatUserConfig = {
     tests: './test',
   },
   solidity: {
-    compilers: [
-      {
-        version: '0.8.17',
-      },
-      {
-        version: '0.6.11',
-      },
-    ],
+    version: '0.8.17',
     settings: {
       metadata: {
         // Not including the metadata hash
@@ -125,14 +118,14 @@ const config: HardhatUserConfig = {
       polygon: process.env.POLYGONSCAN_API_KEY || '',
       optimisticGoerli: process.env.OPTIMISM_API_KEY || '',
       polygonMumbai: process.env.POLYGONSCAN_API_KEY || '',
-      tevmos: process.env.ESCAN_API_KEY || '',
+      quorum: 'abc',
     },
     customChains: [{
-      network: 'tevmos',
-      chainId: chainIds.tevmos,
+      network: 'quorum',
+      chainId: chainIds.quorum,
       urls: {
-        apiURL: `${process.env.ESCAN_URL}/api`,
-        browserURL: process.env.ESCAN_URL as string,
+        apiURL: `${process.env.BLOCKSCOUT_URL}/api`,
+        browserURL: process.env.BLOCKSCOUT_URL as string,
       },
     }],
   },
