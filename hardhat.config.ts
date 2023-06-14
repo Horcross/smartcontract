@@ -4,6 +4,7 @@ import { NetworkUserConfig } from 'hardhat/types'
 import '@nomiclabs/hardhat-ethers'
 import '@nomiclabs/hardhat-etherscan'
 import '@nomicfoundation/hardhat-toolbox'
+import '@openzeppelin/hardhat-upgrades'
 
 import { config as dotenvConfig } from 'dotenv'
 import { resolve } from 'path'
