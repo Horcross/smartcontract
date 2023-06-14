@@ -18,6 +18,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@openzeppelin/contracts": "^4.9.0",
     "@openzeppelin/hardhat-upgrades": "^1.27.0",
+    "@routerprotocol/evm-gateway-contracts": "^1.1.13",
     "dotenv": "^16.0.3",
     "ericlint": "^1.1.12",
     "ethers": "^5.7.2",

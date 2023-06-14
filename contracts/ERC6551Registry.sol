@@ -2,12 +2,35 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Create2.sol";
+import "@routerprotocol/evm-gateway-contracts/contracts/IGateway.sol";
 
 import "./interfaces/IERC6551Registry.sol";
 import "./lib/ERC6551BytecodeLib.sol";
 
 contract ERC6551Registry is IERC6551Registry {
     error InitializationFailed();
+
+    mapping (address => uint256) public acountCount;
+
+    address public owner;
+
+    IGateway public gatewayContract;
+
+    constructor (address payable gatewayAddress, string memory feePayerAddress){
+        owner = msg.sender;
+        gatewayContract = IGateway(gatewayAddress); 
+        gatewayContract.setDappMetadata(feePayerAddress);
+    }
+
+    function setDappMetadata(string memory feePayerAddress) external {
+    require(msg.sender == owner, "only owner");
+    gatewayContract.setDappMetadata(feePayerAddress);
+  }
+
+    function setGateway(address gateway) external {
+    require(msg.sender == owner, "only owner");
+    gatewayContract = IGateway(gateway);
+  }
 
     function createAccount(
         address implementation,
@@ -17,6 +40,7 @@ contract ERC6551Registry is IERC6551Registry {
         uint256 salt,
         bytes calldata initData
     ) external returns (address) {
+
         bytes memory code = ERC6551BytecodeLib.getCreationCode(
             implementation,
             chainId,
@@ -37,7 +61,7 @@ contract ERC6551Registry is IERC6551Registry {
             (bool success, ) = _account.call(initData);
             if (!success) revert InitializationFailed();
         }
-
+        acountCount[msg.sender]++;
         return _account;
     }
 
@@ -60,4 +84,7 @@ contract ERC6551Registry is IERC6551Registry {
 
         return Create2.computeAddress(bytes32(salt), bytecodeHash);
     }
+    // function account() public view returns (uint256) {
+    //     returns acountCount[];
+    // }
 }
