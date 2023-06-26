@@ -25,10 +25,12 @@ const chainIds = {
   avalanche: 43114,
   bsc: 56,
   'arbitrum-mainnet': 42161,
+  'arbitrum-goerli': 421613,
   'polygon-mainnet': 137,
   'optimism-goerli': 420,
   'optimism-mainnet': 10,
   'polygon-mumbai': 80001,
+  'avalanche-fuji': 43113,
 }
 
 // Ensure that we have all the environment variables we need.
@@ -82,8 +84,10 @@ const config: HardhatUserConfig = {
     mainnet: getChainConfig('mainnet'),
     optimism: getChainConfig('optimism-mainnet'),
     'optimism-goerli': getChainConfig('optimism-goerli'),
+    'arbitrum-goerli': getChainConfig('arbitrum-goerli'),
     'polygon-mainnet': getChainConfig('polygon-mainnet'),
     'polygon-mumbai': getChainConfig('polygon-mumbai'),
+    'avalanche-fuji': getChainConfig('avalanche-fuji'),
   },
   paths: {
     artifacts: './artifacts',
@@ -119,6 +123,8 @@ const config: HardhatUserConfig = {
       polygon: process.env.POLYGONSCAN_API_KEY || '',
       optimisticGoerli: process.env.OPTIMISM_API_KEY || '',
       polygonMumbai: process.env.POLYGONSCAN_API_KEY || '',
+      avalancheFujiTestnet: process.env.SNOWTRACE_API_KEY || '',
+      arbitrumGoerli: process.env.SNOWTRACE_API_KEY || '',
       quorum: 'abc',
     },
     customChains: [{

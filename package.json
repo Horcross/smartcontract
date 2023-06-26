@@ -8,6 +8,7 @@
     "compile": "hardhat compile",
     "node": "hardhat node",
     "deploy": "hardhat deploy:contract",
+    "deploy:ac": "hardhat deploy:ERC6551",
     "verify": "hardhat verify:contract",
     "eslint": "eslint -c .eslintrc \"./**/*.ts\"",
     "eslint:fix": "eslint --fix \"./src/*.ts\""
