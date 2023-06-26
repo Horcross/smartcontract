@@ -8,7 +8,7 @@ task('deploy:contract', 'Deploy contract')
     const [signer] = await hre.ethers.getSigners()
     const contractFactory = await hre.ethers.getContractFactory(contract)
     // if you mint in constructor, you need to add value in deploy function
-    const deployContract = await contractFactory.connect(signer).deploy()
+    const deployContract = await contractFactory.connect(signer).deploy() // gateway:0x94caA85bC578C05B22BDb00E6Ae1A34878f047F7 myAddress:0x08b831b770EeFa0602763D9C365350c8D324A29A
     console.log(`${contract} deployed to ${deployContract.address}`)
 
     const address = {

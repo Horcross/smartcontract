@@ -21,6 +21,13 @@ contract ERC6551RegistryAndReadCall is IERC6551Registry {
     IGateway public gatewayContract;
     address public requestAddress;
 
+    struct NFT {
+        uint256 chainId;
+        uint256 tokenId;
+        address[] tbas;
+    }
+    mapping (address => mapping (uint256 => NFT)) public nfts;
+
     event ReceivedData(address requestAddress);
 
     constructor (address payable gatewayAddress, string memory feePayerAddress){
@@ -164,5 +171,15 @@ contract ERC6551RegistryAndReadCall is IERC6551Registry {
         requestAddress = abi.decode(execData, (address));
 
         emit ReceivedData( requestAddress);
+    }
+
+    function addTbaAddress(address nftContract, uint256 nftId, uint256 chain_id,address tba) public {
+        nfts[nftContract][nftId].tokenId = nftId;
+        nfts[nftContract][nftId].chainId = chain_id;
+        nfts[nftContract][nftId].tbas.push(tba);
+    }
+
+    function getTbas(address nftContract, uint256 nftId) public view returns (address[] memory) {
+        return nfts[nftContract][nftId].tbas;
     }
 } 

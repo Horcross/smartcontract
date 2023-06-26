@@ -24,7 +24,13 @@ async function main () {
   const sendRequestResult = sendRequest
   console.log('sendRequest:', sendRequestResult)
 
-  // const getAck = await erc6551registryandreadcallContract.iAck()
+  const addTbaAddress = await erc6551registryandreadcallContract.addTbaAddress(ERC721, 316, 5, '0xab962FbF0C92D00016501d60dfa98d2fd05575bb')
+  const addTbaAddressResult = await addTbaAddress.wait()
+  console.log(addTbaAddressResult)
+
+  const showTbas = await erc6551registryandreadcallContract.getTbas(ERC721, 316)
+  const showTbasResult = showTbas
+  console.log('Tbas: ', showTbasResult)
 }
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 main()

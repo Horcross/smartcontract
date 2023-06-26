@@ -60,12 +60,4 @@ contract ERC6551Registry is IERC6551Registry {
 
         return Create2.computeAddress(bytes32(salt), bytecodeHash);
     }
-
-    function iReceive(
-        string memory requestSender,
-        bytes memory packet,
-        string memory srcChainId
-    ) external returns (bytes memory){
-        
-    }
 }
