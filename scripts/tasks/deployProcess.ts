@@ -75,6 +75,6 @@ task('deploy:ERC6551', 'Deploy 6551 contract')
       implAddr: implAddress,
     }
     const addressData = JSON.stringify(address)
-    writeFileSync(`scripts/address/${hre.network.name}/`, 'ERC6551AccountUpgradeable.json', addressData)
+    writeFileSync(`scripts/address/${hre.network.name}/`, 'ERC6551AccountProxy.json', addressData)
     await proxyContract.deployed()
   })
