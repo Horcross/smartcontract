@@ -9,7 +9,7 @@ import "./lib/ERC6551BytecodeLib.sol";
 
 
 interface ICreateAccountFromAnotherChain is IERC6551Registry{
-    function account(address implementation, uint256 chainId, address tokenContract, uint256 tokenId, uint256 salt) external view returns (address);
+    function createAccount(address implementation, uint256 chainId, address tokenContract, uint256 tokenId, uint256 salt, bytes calldata initData) external returns (address);
 }
 
 contract ERC6551RegistryAndReadCall is IERC6551Registry {
@@ -107,10 +107,11 @@ contract ERC6551RegistryAndReadCall is IERC6551Registry {
         uint256 chainId,
         address tokenContract,
         uint256 tokenId,
-        uint256 salt
+        uint256 salt,
+        bytes calldata initData
     ) public pure returns (bytes memory packet) {
-        packet = abi.encodeCall(ICreateAccountFromAnotherChain.account, 
-        (implementation, chainId, tokenContract, tokenId, salt));
+        packet = abi.encodeCall(ICreateAccountFromAnotherChain.createAccount, 
+        (implementation, chainId, tokenContract, tokenId, salt, initData));
     }
 
     function getRequestMetadata(

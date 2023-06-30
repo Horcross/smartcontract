@@ -9,7 +9,7 @@ async function main () {
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY as BytesLike, goerli)
   const myDoodle = new ethers.Contract(MyDOODLEAddress.main, MyDOODLEABI.abi, wallet)
 
-  const mint = await myDoodle.mint('0x08b831b770EeFa0602763D9C365350c8D324A29A', 316)
+  const mint = await myDoodle.mint('0x08b831b770EeFa0602763D9C365350c8D324A29A', 7560)
   const result = await mint.wait()
   console.log(result)
 }
