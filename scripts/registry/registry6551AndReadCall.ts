@@ -1,6 +1,6 @@
 import { BytesLike, ethers } from 'ethers'
 import { config as dotenvConfig } from 'dotenv'
-import { ERC6551RegistryAndReadCallABI, ERC6551RegistryAndReadCallAddress, ERC6551AccountUpgradeableAddress, ERC6551RegistryAddressFuji } from '../config'
+import { ERC6551RegistryAndReadCallABI, ERC6551RegistryAndReadCallAddress, ERC6551AccountUpgradeableAddress, ERC6551RegistryFujiAddress } from '../config'
 import { resolve } from 'path'
 dotenvConfig({ path: resolve(__dirname, '../../.env') })
 
@@ -12,7 +12,7 @@ async function main () {
   const implementation = ERC6551AccountUpgradeableAddress.main
   const ERC721 = '0x7BFc0b2a0bF455f0D40831274Dec5487A814d243' // MyDOODLE address
 
-  const accountABI = await erc6551registryandreadcallContract.abiPacketAccount(implementation, 5, ERC721, 7560, 12345, '0x8129fc1c')
+  const accountABI = await erc6551registryandreadcallContract.abiPacketAccount(implementation, 5, ERC721, 240, 100, '0x8129fc1c')
   const accountABIresult = accountABI
   console.log('accountAbiResult:', accountABIresult)
 
@@ -20,7 +20,7 @@ async function main () {
   const getMetadataResult = getMetadata
   console.log('getMetadata:', getMetadataResult)
 
-  const sendRequest = await erc6551registryandreadcallContract.sendReadRequest('43113', ERC6551RegistryAddressFuji.main, getMetadataResult, accountABIresult)
+  const sendRequest = await erc6551registryandreadcallContract.sendReadRequest('43113', ERC6551RegistryFujiAddress.main, getMetadataResult, accountABIresult)
   const sendRequestResult = sendRequest
   console.log('sendRequest:', sendRequestResult)
 

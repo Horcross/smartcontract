@@ -21,14 +21,7 @@ contract ERC6551RegistryAndReadCall is IERC6551Registry {
     IGateway public gatewayContract;
     address public requestAddress;
 
-    struct NFT {
-        uint256 chainId;
-        uint256 tokenId;
-        address[] tbas;
-    }
-    mapping (address => mapping (uint256 => NFT)) public nfts;
-
-    event ReceivedData(address requestAddress);
+    event ReceivedData(uint256 _chainId, address _tokenContract, uint256 _tokenId, address _account);
 
     constructor (address payable gatewayAddress, string memory feePayerAddress){
         owner = msg.sender;
@@ -155,32 +148,13 @@ contract ERC6551RegistryAndReadCall is IERC6551Registry {
         );
     }
 
-    // function iReceive(
-    //     string memory requestSender,
-    //     bytes memory packet,
-    //     string memory srcChainId
-    // ) external returns (uint64, string memory) {
-    //     require(msg.sender == address(gatewayContract), "only gateway");
-    //     // TODO
-    // }
-
     function iAck(
         uint256 ,// requestIdentifier
         bool ,// execFlag
         bytes memory execData
     ) external {
-        requestAddress = abi.decode(execData, (address));
+        (uint256 _chainId, address _tokenContract, uint256 _tokenId, address _account) = abi.decode(execData, (uint256, address, uint256, address));
 
-        emit ReceivedData( requestAddress);
-    }
-
-    function addTbaAddress(address nftContract, uint256 nftId, uint256 chain_id,address tba) public {
-        nfts[nftContract][nftId].tokenId = nftId;
-        nfts[nftContract][nftId].chainId = chain_id;
-        nfts[nftContract][nftId].tbas.push(tba);
-    }
-
-    function getTbas(address nftContract, uint256 nftId) public view returns (address[] memory) {
-        return nfts[nftContract][nftId].tbas;
+        emit ReceivedData(_chainId, _tokenContract, _tokenId, _account);
     }
 } 
